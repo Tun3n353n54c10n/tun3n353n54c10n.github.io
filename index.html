@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tarjeta de presentación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul:#1d63d6;
+    --azul-osc:#0c2b5e;
+    --gris:#5f6b7a;
+    --fondo:#eef2f8;
+    --tarjeta:#ffffff;
+    --linea:#e3e8f0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Open Sans",Segoe UI,Arial,sans-serif;
+    background:var(--fondo);
+    color:#1b2430;
+    min-height:100vh;
+    display:flex;justify-content:center;align-items:flex-start;
+    padding:24px 16px 40px;
+  }
+  .card{
+    width:100%;max-width:420px;
+    background:var(--tarjeta);
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(12,43,94,.12);
+    overflow:hidden;
+  }
+  .top{padding:22px 24px 0;display:flex;align-items:center;justify-content:space-between}
+  .marca{font-weight:800;font-size:22px;color:var(--azul);letter-spacing:-.5px}
+  .marca span{font-weight:400;color:var(--azul)}
+  .foto{
+    width:104px;height:104px;border-radius:50%;
+    margin:22px auto 0;display:block;object-fit:cover;
+    border:4px solid #fff;box-shadow:0 0 0 2px var(--azul);
+    background:var(--azul);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:36px;font-weight:700;
+  }
+  .info{text-align:center;padding:16px 24px 6px}
+  .nombre{font-size:22px;font-weight:700;color:var(--azul);line-height:1.25}
+  .nombre b{font-weight:800;text-transform:uppercase}
+  .cargo{color:var(--gris);font-size:15px;margin-top:4px}
+  .unidad{color:var(--gris);font-size:14px}
+  .jefatura{
+    margin:14px 24px 0;padding-top:14px;border-top:1px solid var(--linea);
+    font-weight:700;font-size:14px;color:var(--azul-osc);text-align:center;line-height:1.4
+  }
+  .bio{margin:14px 24px 0;font-size:14px;color:#3b4654;text-align:center;line-height:1.55}
+  .acciones{padding:20px 24px 8px;display:grid;gap:10px}
+  .btn{
+    display:flex;align-items:center;gap:12px;
+    padding:13px 16px;border-radius:12px;
+    border:1px solid var(--linea);background:#fff;
+    color:#1b2430;text-decoration:none;font-size:15px;font-weight:600;
+    transition:background .15s,border-color .15s;
+  }
+  .btn:hover{background:#f5f8fd;border-color:#c9d6ec}
+  .btn svg{width:22px;height:22px;flex:none;fill:var(--azul)}
+  .btn small{display:block;font-weight:400;color:var(--gris);font-size:13px}
+  .btn.principal{background:var(--azul);border-color:var(--azul);color:#fff;justify-content:center}
+  .btn.principal svg{fill:#fff}
+  .btn.principal:hover{background:#1752b3}
+  .valores{
+    margin-top:18px;background:var(--azul-osc);color:#fff;
+    font-size:10.5px;font-weight:600;letter-spacing:.4px;text-align:center;
+    padding:11px 10px;text-transform:uppercase;
+  }
+  .valores i{font-style:normal;opacity:.7;margin:0 5px}
+</style>
+</head>
+<body>
+
+<main class="card">
+  <div class="top"><div class="marca">JENATID <span>digital</span></div></div>
+
+  <div id="foto"></div>
+
+  <div class="info">
+    <h1 class="nombre" id="nombre"></h1>
+    <p class="cargo" id="cargo"></p>
+    <p class="unidad" id="unidad"></p>
+  </div>
+
+  <p class="jefatura" id="jefatura"></p>
+  <p class="bio" id="bio"></p>
+
+  <div class="acciones" id="acciones"></div>
+
+  <div class="valores">Vocación de servicio<i>•</i>Probidad<i>•</i>Profesionalismo<i>•</i>Integridad</div>
+</main>
+
+<script>
+/* ============================================================
+   EDITA SOLO ESTA SECCIÓN CON TUS DATOS
+   (deja "" en lo que no quieras mostrar)
+   ============================================================ */
+const DATOS = {
+  nombres:   "Jimmy",
+  apellidos: "Espinoza Vera",
+  cargo:     "Profesional",
+  unidad:    "Departamento de Informática y Telecomunicaciones",
+  jefatura:  "Jefatura Nacional de Tecnologías de la Información y Transformación Digital",
+  organizacion: "PDI Chile",
+  bio:       "Desarrollo de sistemas institucionales en .NET / C# y SQL Server.",
+  foto:      "",                       // ej: "foto.jpg" (sube la imagen junto a este archivo)
+  telefono:  "+56 9 0000 0000",        // CAMBIAR
+  whatsapp:  "",                       // ej: "56900000000" (solo números)
+  correo:    "correo@ejemplo.cl",      // CAMBIAR
+  linkedin:  "",                       // ej: "https://www.linkedin.com/in/tuusuario"
+  web:       ""                        // ej: "https://pdichile.cl"
+};
+/* ============================================================ */
+
+const $ = id => document.getElementById(id);
+const icon = {
+  contacto:'<svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v3h16v-3c0-2.8-3.6-5-8-5z"/></svg>',
+  tel:'<svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>',
+  wsp:'<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.2.5.1.6 0l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.6-.1 1.1z"/></svg>',
+  mail:'<svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/></svg>',
+  in:'<svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.3 18.3H5.7V9.7h2.6zM7 8.6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm11.3 9.7h-2.7v-4.2c0-1 0-2.3-1.4-2.3s-1.6 1.1-1.6 2.2v4.3H10V9.7h2.5v1.2a2.8 2.8 0 0 1 2.5-1.4c2.7 0 3.2 1.8 3.2 4.1z"/></svg>',
+  web:'<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-3a15.7 15.7 0 0 0-1.4-3.6A8 8 0 0 1 18.9 8zM12 4c.8 1.2 1.5 2.5 1.9 4h-3.8c.4-1.5 1.1-2.8 1.9-4zM4.3 14a8 8 0 0 1 0-4h3.4a16.5 16.5 0 0 0 0 4zm.8 2h3a15.7 15.7 0 0 0 1.4 3.6A8 8 0 0 1 5.1 16zm3-8h-3a8 8 0 0 1 4.3-3.6C8.9 5.5 8.4 6.7 8.1 8zM12 20c-.8-1.2-1.5-2.5-1.9-4h3.8c-.4 1.5-1.1 2.8-1.9 4zm2.3-6H9.7a14.7 14.7 0 0 1 0-4h4.6a14.7 14.7 0 0 1 0 4zm.3 5.6c.6-1.1 1.1-2.3 1.4-3.6h3a8 8 0 0 1-4.4 3.6zm1.7-5.6a16.5 16.5 0 0 0 0-4h3.4a8 8 0 0 1 0 4z"/></svg>'
+};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const d = DATOS;
+const nombreCompleto = `${d.nombres} ${d.apellidos}`.trim();
+
+document.title = nombreCompleto;
+$("nombre").innerHTML = `${esc(d.nombres)} <b>${esc(d.apellidos)}</b>`;
+$("cargo").textContent = d.cargo;
+$("unidad").textContent = d.unidad;
+$("jefatura").textContent = d.jefatura;
+if (d.bio) $("bio").textContent = d.bio; else $("bio").remove();
+if (!d.jefatura) $("jefatura").remove();
+
+const iniciales = (d.nombres[0] || "") + (d.apellidos[0] || "");
+$("foto").outerHTML = d.foto
+  ? `<img class="foto" src="${esc(d.foto)}" alt="${esc(nombreCompleto)}">`
+  : `<div class="foto">${esc(iniciales.toUpperCase())}</div>`;
+
+const btns = [];
+btns.push(`<a class="btn principal" href="#" id="guardar">${icon.contacto}Guardar contacto</a>`);
+if (d.telefono) btns.push(`<a class="btn" href="tel:${esc(d.telefono.replace(/\s/g,''))}">${icon.tel}<span>Llamar<small>${esc(d.telefono)}</small></span></a>`);
+if (d.whatsapp) btns.push(`<a class="btn" href="https://wa.me/${esc(d.whatsapp)}" target="_blank" rel="noopener">${icon.wsp}<span>WhatsApp<small>Enviar mensaje</small></span></a>`);
+if (d.correo) btns.push(`<a class="btn" href="mailto:${esc(d.correo)}">${icon.mail}<span>Correo<small>${esc(d.correo)}</small></span></a>`);
+if (d.linkedin) btns.push(`<a class="btn" href="${esc(d.linkedin)}" target="_blank" rel="noopener">${icon.in}<span>LinkedIn<small>Ver perfil</small></span></a>`);
+if (d.web) btns.push(`<a class="btn" href="${esc(d.web)}" target="_blank" rel="noopener">${icon.web}<span>Sitio web<small>${esc(d.web.replace(/^https?:\/\//,''))}</small></span></a>`);
+$("acciones").innerHTML = btns.join("");
+
+/* Genera y descarga el contacto (.vcf) */
+$("guardar").addEventListener("click", e => {
+  e.preventDefault();
+  const v = [
+    "BEGIN:VCARD","VERSION:3.0",
+    `N:${d.apellidos};${d.nombres};;;`,
+    `FN:${nombreCompleto}`,
+    d.organizacion && `ORG:${d.organizacion};${d.jefatura}`,
+    d.cargo && `TITLE:${d.cargo}`,
+    d.telefono && `TEL;TYPE=CELL:${d.telefono.replace(/\s/g,'')}`,
+    d.correo && `EMAIL;TYPE=WORK:${d.correo}`,
+    d.web && `URL:${d.web}`,
+    d.linkedin && `URL:${d.linkedin}`,
+    `URL:${location.href}`,
+    "END:VCARD"
+  ].filter(Boolean).join("\r\n");
+  const blob = new Blob([v], {type:"text/vcard;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = nombreCompleto.replace(/\s+/g,"_") + ".vcf";
+  document.body.appendChild(a); a.click(); a.remove();
+});
+</script>
+</body>
+</html>
